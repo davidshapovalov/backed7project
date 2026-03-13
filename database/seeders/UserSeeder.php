@@ -1,0 +1,69 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
+class UserSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        DB::table('users')->insert([
+            [
+                'first_name' => 'Pán',
+                'last_name' => 'Admin',
+                'email' => 'admin@ukf.sk',
+                'password' => Hash::make('123'),
+                'role' => 'admin',
+                'premium_until' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'first_name' => 'Dávid',
+                'last_name' => 'Držík',
+                'email' => 'ddrzik@ukf.sk',
+                'password' => Hash::make('456'),
+                'role' => 'user',
+                'premium_until' => now()->addDays(30),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'first_name' => 'Jozef',
+                'last_name' => 'Kapusta',
+                'email' => 'jkapusta@ukf.sk',
+                'password' => Hash::make('789'),
+                'role' => 'user',
+                'premium_until' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'first_name' => 'Anna',
+                'last_name' => 'Annova',
+                'email' => 'anova@ukf.sk',
+                'password' => Hash::make('111'),
+                'role' => 'user',
+                'premium_until' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'first_name' => 'Martin',
+                'last_name' => 'Kovac',
+                'email' => 'mkovac@ukf.sk',
+                'password' => Hash::make('222'),
+                'role' => 'user',
+                'premium_until' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+    }
+}
