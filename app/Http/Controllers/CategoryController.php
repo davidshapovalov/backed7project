@@ -37,11 +37,25 @@ class CategoryController extends Controller
 //
 //        return response()->json(['message' => 'Category created'], Response::HTTP_CREATED);
 //    }
+//    public function store(Request $request)
+//    {
+//        $data = $request->validate([
+//            'name' => 'required|string|max:128',
+//            'color' => 'nullable|string|max:16',
+//        ]);
+//
+//        $category = Category::create($data);
+//
+//        return response()->json([
+//            'message' => 'Category created',
+//            'category' => $category
+//        ], Response::HTTP_CREATED);
+//    }
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:128',
-            'color' => 'nullable|string|max:16', // если есть поле color
+            'name' => 'required|string|max:128|unique:categories,name',
+            'color' => 'nullable|string|regex:/^#[0-9A-Fa-f]{6}$/',
         ]);
 
         $category = Category::create($data);
@@ -51,6 +65,7 @@ class CategoryController extends Controller
             'category' => $category
         ], Response::HTTP_CREATED);
     }
+
 
 //    public function show(string $id)
 //    {
@@ -90,17 +105,36 @@ class CategoryController extends Controller
 //
 //        return response()->json(['message' => 'Category updated'], Response::HTTP_OK);
 //    }
+//    public function update(Request $request, string $id)
+//    {
+//        $category = Category::find($id);
+//
+//        if (!$category) {
+//            return response()->json(['message' => 'Category not found'], Response::HTTP_NOT_FOUND);
+//        }
+//
+//        $data = $request->validate([
+//            'name' => 'required|string|max:128',
+//            'color' => 'nullable|string|max:16',
+//        ]);
+//
+//        $category->update($data);
+//
+//        return response()->json([
+//            'message' => 'Category updated',
+//            'category' => $category
+//        ], Response::HTTP_OK);
+//    }
     public function update(Request $request, string $id)
     {
         $category = Category::find($id);
-
         if (!$category) {
             return response()->json(['message' => 'Category not found'], Response::HTTP_NOT_FOUND);
         }
 
         $data = $request->validate([
-            'name' => 'required|string|max:128',
-            'color' => 'nullable|string|max:16',
+            'name' => 'required|string|max:128|unique:categories,name,' . $category->id,
+            'color' => 'nullable|string|regex:/^#[0-9A-Fa-f]{6}$/',
         ]);
 
         $category->update($data);
